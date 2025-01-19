@@ -1,0 +1,129 @@
+{
+    "testTitle": "Sample QTI 2.1 Test",
+    "questions": [
+        {
+            "id": "q1",
+            "type": "single",
+            "question": "What is the largest planet in our Solar System?",
+            "choices": [
+                {"id": "a", "text": "Earth"},
+                {"id": "b", "text": "Jupiter"},
+                {"id": "c", "text": "Mars"},
+                {"id": "d", "text": "Saturn"}
+            ],
+            "correctAnswers": ["b"]
+        },
+        {
+            "id": "q2",
+            "type": "multiple",
+            "question": "Which of the following are programming languages?",
+            "choices": [
+                {"id": "a", "text": "Python"},
+                {"id": "b", "text": "HTML"},
+                {"id": "c", "text": "Java"},
+                {"id": "d", "text": "CSS"}
+            ],
+            "correctAnswers": ["a", "c"]
+        },
+        {
+            "id": "q3",
+            "type": "single",
+            "question": "Who wrote the play 'Romeo and Juliet'?",
+            "choices": [
+                {"id": "a", "text": "William Shakespeare"},
+                {"id": "b", "text": "Charles Dickens"},
+                {"id": "c", "text": "Leo Tolstoy"},
+                {"id": "d", "text": "Mark Twain"}
+            ],
+            "correctAnswers": ["a"]
+        },
+        {
+            "id": "q4",
+            "type": "multiple",
+            "question": "Select the prime numbers from the list below.",
+            "choices": [
+                {"id": "a", "text": "2"},
+                {"id": "b", "text": "4"},
+                {"id": "c", "text": "5"},
+                {"id": "d", "text": "9"},
+                {"id": "e", "text": "11"}
+            ],
+            "correctAnswers": ["a", "c", "e"]
+        },
+        {
+            "id": "q5",
+            "type": "single",
+            "question": "What is the chemical symbol for water?",
+            "choices": [
+                {"id": "a", "text": "O2"},
+                {"id": "b", "text": "H2O"},
+                {"id": "c", "text": "CO2"},
+                {"id": "d", "text": "HO"}
+            ],
+            "correctAnswers": ["b"]
+        },
+        {
+            "id": "q6",
+            "type": "multiple",
+            "question": "Which of the following are continents?",
+            "choices": [
+                {"id": "a", "text": "Asia"},
+                {"id": "b", "text": "Greenland"},
+                {"id": "c", "text": "Africa"},
+                {"id": "d", "text": "Australia"},
+                {"id": "e", "text": "Antarctica"}
+            ],
+            "correctAnswers": ["a", "c", "d", "e"]
+        },
+        {
+            "id": "q7",
+            "type": "single",
+            "question": "What is the boiling point of water at sea level?",
+            "choices": [
+                {"id": "a", "text": "90°C"},
+                {"id": "b", "text": "100°C"},
+                {"id": "c", "text": "110°C"},
+                {"id": "d", "text": "120°C"}
+            ],
+            "correctAnswers": ["b"]
+        },
+        {
+            "id": "q8",
+            "type": "multiple",
+            "question": "Which of the following animals are mammals?",
+            "choices": [
+                {"id": "a", "text": "Shark"},
+                {"id": "b", "text": "Dolphin"},
+                {"id": "c", "text": "Eagle"},
+                {"id": "d", "text": "Bat"},
+                {"id": "e", "text": "Crocodile"}
+            ],
+            "correctAnswers": ["b", "d"]
+        },
+        {
+            "id": "q9",
+            "type": "single",
+            "question": "Which element has the atomic number 1?",
+            "choices": [
+                {"id": "a", "text": "Helium"},
+                {"id": "b", "text": "Oxygen"},
+                {"id": "c", "text": "Hydrogen"},
+                {"id": "d", "text": "Carbon"}
+            ],
+            "correctAnswers": ["c"]
+        },
+        {
+            "id": "q10",
+            "type": "multiple",
+            "question": "Select the programming paradigms represented below.",
+            "choices": [
+                {"id": "a", "text": "Object-Oriented"},
+                {"id": "b", "text": "Procedural"},
+                {"id": "c", "text": "Functional"},
+                {"id": "d", "text": "Linear"},
+                {"id": "e", "text": "Logical"}
+            ],
+            "correctAnswers": ["a", "b", "c", "e"]
+        }
+    ]
+}

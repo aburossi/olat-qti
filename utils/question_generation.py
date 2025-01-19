@@ -44,12 +44,34 @@ def transform_output(json_string):
 
 def generate_questions_for_content(text, user_input, learning_goals, selected_types, selected_language, selected_model, image=None, client=None):
     """Generates questions based on the provided content or image."""
+    if client is None:
+        st.error("OpenAI-Client ist nicht initialisiert.")
+        return ""
+
     all_responses = ""
     generated_content = {}
     for msg_type in selected_types:
         prompt_template = read_prompt_from_md(msg_type)
         if not prompt_template:
             continue  # Skip if no prompt file found
+
+        # Replace placeholders in the prompt_template
+        if msg_type == "draganddrop":
+            # Example: Replace {bloom_level} with actual level
+            # You need to define how to map msg_type to bloom_level
+            # For demonstration, let's assume you have a mapping
+            bloom_level_mapping = {
+                "draganddrop": "Verstehen",
+                "inline_fib": "Erinnern",
+                # Add other mappings as needed
+            }
+            bloom_level = bloom_level_mapping.get(msg_type, "Verstehen")
+            prompt_template = prompt_template.replace("{bloom_level}", bloom_level)
+            # Similarly, replace other placeholders if any
+        elif msg_type == "inline_fib":
+            # Handle specific replacements for inline_fib
+            pass
+        # Add more elif blocks for other msg_types if necessary
 
         # Combine the prompt template with user input and learning goals
         full_prompt = f"{prompt_template}\n\nBenutzereingabe: {user_input}\n\nLernziele: {learning_goals}"

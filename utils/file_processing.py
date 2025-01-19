@@ -97,3 +97,70 @@ def process_pdf(file):
         return None, images  # Fallback to image processing
     else:
         return text_content, None
+
+def convert_json_to_text_format(json_input):
+    """
+    Converts JSON input into a specific text format for FIB and Inline Choice questions.
+
+    Parameters:
+    - json_input (str or dict): The JSON data as a string or dictionary.
+
+    Returns:
+    - tuple: Contains two strings for FIB (Fill in the Blank) and Inline Choice formats.
+    """
+    import json
+    import random
+
+    if isinstance(json_input, str):
+        data = json.loads(json_input)
+    else:
+        data = json_input
+
+    fib_output = []
+    ic_output = []
+
+    for item in data:
+        text = item.get('text', '')
+        blanks = item.get('blanks', [])
+        wrong_substitutes = item.get('wrong_substitutes', [])
+
+        num_blanks = len(blanks)
+
+        # Generate FIB (Fill in the Blank) format
+        fib_lines = [
+            "Type\tFIB",
+            "Title\t✏✏Vervollständigen Sie die Lücken mit dem korrekten Begriff.✏✏",
+            f"Points\t{num_blanks}"
+        ]
+
+        for blank in blanks:
+            text = text.replace(blank, "{blank}", 1)
+
+        parts = text.split("{blank}")
+        for index, part in enumerate(parts):
+            fib_lines.append(f"Text\t{part.strip()}")
+            if index < len(blanks):
+                fib_lines.append(f"1\t{blanks[index]}\t20")
+
+        fib_output.append('\n'.join(fib_lines))
+
+        # Generate Inline Choice format
+        ic_lines = [
+            "Type\tInlinechoice",
+            "Title\tWörter einordnen",
+            "Question\t✏✏Wählen Sie die richtigen Wörter.✏✏",
+            f"Points\t{num_blanks}"
+        ]
+
+        all_options = blanks + wrong_substitutes
+        random.shuffle(all_options)
+
+        for index, part in enumerate(parts):
+            ic_lines.append(f"Text\t{part.strip()}")
+            if index < len(blanks):
+                options_str = '|'.join(all_options)
+                ic_lines.append(f"1\t{options_str}\t{blanks[index]}\t|")
+
+        ic_output.append('\n'.join(ic_lines))
+
+    return '\n\n'.join(fib_output), '\n\n'.join(ic_output)

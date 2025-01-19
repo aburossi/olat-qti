@@ -9,10 +9,13 @@ from .file_processing import process_image
 
 def initialize_openai_client(api_key):
     """Initializes the OpenAI client without proxy settings."""
-    os.environ.pop('HTTP_PROXY', None)
-    os.environ.pop('HTTPS_PROXY', None)
-    os.environ.pop('http_proxy', None)
-    os.environ.pop('https_proxy', None)
+    try:
+        os.environ.pop('HTTP_PROXY', None)
+        os.environ.pop('HTTPS_PROXY', None)
+        os.environ.pop('http_proxy', None)
+        os.environ.pop('https_proxy', None)
+    except KeyError:
+        pass  # If the variable does not exist, ignore
 
     http_client = httpx.Client()
 
@@ -28,7 +31,7 @@ def initialize_openai_client(api_key):
         logging.error(f"OpenAI Client Initialization Error: {e}")
         return None
 
-def get_chatgpt_response(client, prompt, model, image=None, selected_language="English"):
+def get_chatgpt_response(client, prompt, model, image=None, selected_language="German"):
     """Fetches a response from OpenAI GPT with error handling."""
     if not client:
         st.error("Kein gültiger OpenAI-API-Schlüssel vorhanden. Bitte geben Sie Ihren API-Schlüssel ein.")
@@ -58,23 +61,14 @@ def get_chatgpt_response(client, prompt, model, image=None, selected_language="E
             - **Erstellen**: Fragen, die die Erstellung neuer Inhalte oder Konzepte erfordern.
             """
         )
-        
+
         if image:
             base64_image = process_image(image)
             messages = [
                 {"role": "system", "content": system_prompt},
                 {
                     "role": "user", 
-                    "content": [
-                        {"type": "text", "text": prompt},
-                        {
-                            "type": "image_url",
-                            "image_url": {
-                                "url": f"data:image/jpeg;base64,{base64_image}",
-                                "detail": "low"
-                            }
-                        }
-                    ]
+                    "content": f"{prompt}\n\n[Image Data: data:image/jpeg;base64,{base64_image}]"
                 }
             ]
         else:
@@ -83,13 +77,19 @@ def get_chatgpt_response(client, prompt, model, image=None, selected_language="E
                 {"role": "user", "content": prompt}
             ]
 
+        # Log the prompt for debugging
+        logging.info(f"Sending prompt to OpenAI API:\n{prompt}")
+
         response = client.chat.completions.create(
             model=model,
             messages=messages,
-            max_tokens=15000,  # Updated max tokens
+            max_tokens=1500,  # Adjusted max tokens to a reasonable number
             temperature=0.6
         )
         
+        # Log the response for debugging
+        logging.info(f"Received response from OpenAI API:\n{response.choices[0].message.content}")
+
         return response.choices[0].message.content
     except Exception as e:
         st.error(f"Fehler bei der Kommunikation mit der OpenAI API: {e}")
